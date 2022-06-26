@@ -22,16 +22,21 @@ class docker {
     }
   }
 
-  package { 'docker-ce':
+  package { 'docker-ce' :
     ensure     => installed,
   }
-  package { 'docker-ce-cli':
+  package { 'docker-ce-cli' :
     ensure     => installed,
   }
-  package { 'docker-compose-plugin':
+  package { 'docker-compose-plugin' :
     ensure     => installed,
   }
-  service { 'docker':
+  service { 'docker' :
     ensure     => running,
+  }
+  exec { 'docker-compose' :
+    path    => ['/usr/bin', '/usr/sbin', '/bin'],
+    command => 'curl -L --fail https://raw.githubusercontent.com/linuxserver/docker-docker-compose/v2/run.sh -o /usr/local/bin/docker-compose && sudo chmod +x /usr/local/bin/docker-compose',
+    onlyif  => 'test ! -f /usr/local/bin/docker-compose',
   }
 }

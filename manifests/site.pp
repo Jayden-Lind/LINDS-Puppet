@@ -13,12 +13,12 @@ node 'jd-backup-01.linds.com.au' {
   }
 }
 
-node 'jd-docker-01.linds.com.au', 'jd-dev-01.linds.com.au' {
+node 'jd-docker-01.linds.com.au', 'jd-dev-01.linds.com.au', 'jd-dev-02.linds.com.au' {
   include common
   include docker
 }
 
-node 'linds-docker-01.linds.com.au' {
+node 'linds-docker-01.linds.com.au', 'linds-docker-02.linds.com.au' {
   include common
   include docker
   class { 'auto_fs_nas':
