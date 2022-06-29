@@ -51,3 +51,8 @@ node 'linds-plex-01.linds.com.au' {
 node 'jd-torrent-01.linds.com.au' {
   include common
 }
+
+node 'jd-kube-01.linds.com.au', 'jd-kube-02.linds.com.au' {
+  include common
+  include kubernetes
+}

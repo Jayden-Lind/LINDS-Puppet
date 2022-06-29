@@ -4,16 +4,20 @@ This is all my puppet declarations for certain services across a couple of VM's
 
 **Modules**
 ```
-/etc/puppetlabs/code/environments/production/modules
 ├── accounts (???)
-├── puppet-chrony (v1.0.0)
-├── puppet-epel (v3.1.0)
+├── puppet-autofs (v6.0.0)
+├── puppet-chrony (v2.4.0)
+├── puppet-epel (v4.1.0)
+├── puppet-logrotate (v5.0.0)
 ├── puppet-selinux (v3.4.0)
-├── puppetlabs-inifile (v5.0.1)
+├── puppetlabs-concat (v6.4.0)
+├── puppetlabs-inifile (v5.3.0)
+├── puppetlabs-motd (v6.2.0)
 ├── puppetlabs-ntp (v9.0.1)
-├── puppetlabs-stdlib (v7.1.0)  invalid
+├── puppetlabs-stdlib (v8.2.0)  invalid
 ├── saz-timezone (v6.1.0)
-└── treydock-yum_cron (v6.0.0)
+├── thias-sysctl (v1.0.7)
+└── treydock-yum_cron (v6.2.0)
 ```
 
 **Puppet.conf of puppet master server**
