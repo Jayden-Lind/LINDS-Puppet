@@ -20,9 +20,10 @@ class plex {
     }
   }
   package { 'plexmediaserver' :
-    ensure     => latest,
+    ensure => latest,
   }
   service { 'plexmediaserver':
-    ensure     => running,
+    ensure => running,
+    enable => true,
   }
 }

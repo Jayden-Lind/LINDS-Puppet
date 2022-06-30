@@ -7,32 +7,33 @@ class docker {
     gpgkey   => 'https://download.docker.com/linux/centos/gpg',
   }
   package { 'podman' :
-    ensure     => purged,
+    ensure => purged,
   }
 
   if $facts['os']['distro']['release']['full'] == '8' {
     package { 'runc' :
-      ensure     => purged,
+      ensure => purged,
     }
   }
 
   if $facts['os']['distro']['release']['full'] == '9' {
     package { 'runc' :
-      ensure     => purged,
+      ensure => purged,
     }
   }
 
   package { 'docker-ce' :
-    ensure     => installed,
+    ensure => installed,
   }
   package { 'docker-ce-cli' :
-    ensure     => installed,
+    ensure => installed,
   }
   package { 'docker-compose-plugin' :
-    ensure     => installed,
+    ensure => installed,
   }
   service { 'docker' :
-    ensure     => running,
+    ensure => running,
+    enable => true,
   }
   exec { 'docker-compose' :
     path    => ['/usr/bin', '/usr/sbin', '/bin'],

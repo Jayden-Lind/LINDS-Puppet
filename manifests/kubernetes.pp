@@ -1,6 +1,4 @@
 class kubernetes {
-  require docker
-
   $repo = "[kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -16,6 +14,16 @@ exclude=kubelet kubeadm kubectl"
     path    => $repopath,
     content => $repo,
   }
+  file { 'cri-o repo':
+    path    => '/etc/yum.repos.d/devel_cri_1.24.repo',
+    content => '[devel_kubic_libcontainers_stable_cri-o_1.24]
+name=devel:kubic:libcontainers:stable:cri-o:1.24 (CentOS_8)
+type=rpm-md
+baseurl=https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24/CentOS_8/
+gpgcheck=1
+gpgkey=https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24/CentOS_8/repodata/repomd.xml.key
+enabled=1',
+  }
   package { 'kubelet':
     ensure          => latest,
     install_options => '--disableexcludes=kubernetes',
@@ -28,8 +36,16 @@ exclude=kubelet kubeadm kubectl"
     ensure          => latest,
     install_options => '--disableexcludes=kubernetes',
   }
+  package { 'cri-o':
+    ensure => latest,
+  }
+  service { 'crio':
+    ensure => running,
+    enable => true,
+  }
   service { 'kubelet':
     ensure => running,
+    enable => true,
   }
   exec { 'disable swap':
     path    => ['/usr/sbin/', '/usr/bin', '/bin', '/sbin'],
@@ -43,7 +59,19 @@ exclude=kubelet kubeadm kubectl"
     match_for_absence => true,
     multiple          => true,
   }
-  file { '/etc/containerd/config.toml':
-    ensure => absent,
+  exec { 'enable ip forward':
+    path    => ['/usr/sbin/', '/usr/bin', '/bin', '/sbin'],
+    command => 'echo 1 > /proc/sys/net/ipv4/ip_forward',
+    unless  => 'grep 1 /proc/sys/net/ipv4/ip_forward',
+  }
+  exec { 'enable br filter':
+    path    => ['/usr/sbin/', '/usr/bin', '/bin', '/sbin'],
+    command => 'modprobe br_netfilter',
+    unless  => 'grep 1 /proc/sys/net/bridge/bridge-nf-call-iptables',
+  }
+  exec { 'kube autocomplete':
+    path    => ['/usr/sbin/', '/usr/bin', '/bin', '/sbin'],
+    command => 'kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null',
+    unless  => 'test -f /etc/bash_completion.d/kubectl',
   }
 }
