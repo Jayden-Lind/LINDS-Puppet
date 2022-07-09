@@ -11,7 +11,10 @@ class common {
   }
 
   class { 'yum_cron':
+    ensure        => 'present',
     apply_updates => true,
+    enable        => true,
+    upgrade_type  => 'default',
   }
 
   class { 'logrotate' :
@@ -61,5 +64,10 @@ class common {
     section => 'main',
     setting => 'runinterval',
     value   => '21600',
+  }
+  if $facts['os']['distro']['release']['full'] == '9' {
+    exec { 'update-crypto-policies --set DEFAULT:SHA1':
+      path=> ['/usr/bin', '/usr/sbin',],
+    }
   }
 }

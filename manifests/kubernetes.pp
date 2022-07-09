@@ -74,4 +74,28 @@ enabled=1',
     command => 'kubectl completion bash | sudo tee /etc/bash_completion.d/kubectl > /dev/null',
     unless  => 'test -f /etc/bash_completion.d/kubectl',
   }
+  file_line { 'add KUBECONFIG to env':
+    ensure => present,
+    path   => '/root/.bashrc',
+    match  => '^export KUBECONFIG',
+    line   => 'export KUBECONFIG=/etc/kubernetes/admin.conf',
+  }
+  file { '/mnt/data':
+    ensure => 'directory',
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+  }
+  file { '/opt/bin':
+    ensure => 'directory',
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+  }
+  file { 'flanneld':
+    ensure => 'file',
+    path   => '/opt/bin/flanneld',
+    mode   => 'a+x',
+    source => 'https://github.com/flannel-io/flannel/releases/latest/download/flanneld-amd64',
+  }
 }

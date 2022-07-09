@@ -13,12 +13,6 @@ class plex {
 
 #update-crypto-policies --set DEFAULT:SHA1
 #allows the plex repo to work on centos 9
-
-  if $facts['os']['distro']['release']['full'] == '9' {
-    exec { 'update-crypto-policies --set DEFAULT:SHA1':
-      path=> ['/usr/bin', '/usr/sbin',],
-    }
-  }
   package { 'plexmediaserver' :
     ensure => latest,
   }
