@@ -26,7 +26,11 @@ class common {
   }
 
   package { 'cifs-utils' :
-    ensure     => installed,
+    ensure     => latest,
+  }
+
+  package { 'nfs-utils' :
+    ensure     => latest,
   }
 
   include epel
