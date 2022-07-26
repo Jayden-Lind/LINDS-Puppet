@@ -25,15 +25,15 @@ This is all my puppet declarations for certain services across a couple of VM's
 ### RHEL/CentOS 8
 
 ```
-# rpm -Uvh https://yum.puppet.com/puppet-release-el-8.noarch.rpm
-# dnf install puppet-agent
+$ rpm -Uvh https://yum.puppet.com/puppet-release-el-8.noarch.rpm
+$ dnf install puppet-agent
 ```
 
 ### RHEL/CentOS 9
 
 ```
-# rpm -Uvh https://yum.puppet.com/puppet-release-el-9.noarch.rpm
-# dnf install puppet-agent
+$ rpm -Uvh https://yum.puppet.com/puppet-release-el-9.noarch.rpm
+$ dnf install puppet-agent
 ```
 
 ## Password lookups
