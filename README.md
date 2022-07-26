@@ -2,7 +2,7 @@
 This is all my puppet declarations for certain services across a couple of VM's
 
 
-**Modules**
+## Modules
 ```
 ├── accounts (???)
 ├── puppet-autofs (v6.0.0)
@@ -20,37 +20,27 @@ This is all my puppet declarations for certain services across a couple of VM's
 └── treydock-yum_cron (v6.2.0)
 ```
 
-**Puppet.conf of puppet master server**
-```
-[main]
-dns_alt_names = puppet,puppet.linds.com.au
-# This file can be used to override the default puppet settings.
-# See the following links for more details on what settings are available:
-# - https://puppet.com/docs/puppet/latest/config_important_settings.html
-# - https://puppet.com/docs/puppet/latest/config_about_settings.html
-# - https://puppet.com/docs/puppet/latest/config_file_main.html
-# - https://puppet.com/docs/puppet/latest/configuration.html
-[server]
-vardir = /opt/puppetlabs/server/data/puppetserver
-logdir = /var/log/puppetlabs/puppetserver
-rundir = /var/run/puppetlabs/puppetserver
-pidfile = /var/run/puppetlabs/puppetserver/puppetserver.pid
-codedir = /etc/puppetlabs/code
-autosign = true
-```
+## Commands for Client
 
-**Commands for Client**
+### RHEL/CentOS 8
+
 ```
 # rpm -Uvh https://yum.puppet.com/puppet-release-el-8.noarch.rpm
 # dnf install puppet-agent
-# puppet config set server puppet.linds.com.au
 ```
 
-**Password files**
+### RHEL/CentOS 9
 
-Passwords are done by external lookups on a yaml file. This allows flexibility to store more config without showing the password.
+```
+# rpm -Uvh https://yum.puppet.com/puppet-release-el-9.noarch.rpm
+# dnf install puppet-agent
+```
 
-/etc/puppetlabs/code/environments/production/data/password.yml
+## Password lookups
+
+Passwords are done by external lookups on a yaml file. This allows flexibility to store config without storing the password in Git.
+
+`/etc/puppetlabs/code/environments/production/data/password.yml`
 
 ```
 ---
