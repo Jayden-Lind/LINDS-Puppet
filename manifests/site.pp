@@ -21,10 +21,10 @@ node 'jd-docker-01.linds.com.au', 'jd-dev-01.linds.com.au', 'jd-dev-02.linds.com
 node 'linds-docker-01.linds.com.au', 'linds-docker-02.linds.com.au' {
   include common
   include docker
-  class { 'auto_fs_nas':
-    nas_server => 'linds-dc',
-    mount_path => '/var/lib/docker/volumes/nfs_nas/',
-    mount_dir  => '_data',
+  class { 'nfs':
+    nfs_server     => 'linds-truenas-01.linds.com.au',
+    nfs_extra_path => '/mnt/ZFS_NAS',
+    mount_path     => '/var/lib/docker/volumes/nfs_nas/_data',
   }
 }
 
@@ -41,10 +41,10 @@ node 'jd-plex-01.linds.com.au' {
 node 'linds-plex-01.linds.com.au' {
   include common
   include plex
-  class { 'auto_fs_nas':
-    nas_server => 'linds-dc',
-    mount_path => '/mnt/',
-    mount_dir  => 'nas',
+  class { 'nfs':
+    nfs_server     => 'linds-truenas-01.linds.com.au',
+    nfs_extra_path => '/mnt/ZFS_NAS',
+    mount_path     => '/mnt/nas',
   }
 }
 
