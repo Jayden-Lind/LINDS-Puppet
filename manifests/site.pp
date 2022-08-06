@@ -9,7 +9,7 @@ node 'jd-backup-01.linds.com.au' {
     nas_server => 'jd-dc-01',
     mount_path => '/mnt/',
     mount_dir  => 'nas',
-    extra_path => '/server/backup/wordpress',
+    extra_path => '/server/backup',
   }
 }
 

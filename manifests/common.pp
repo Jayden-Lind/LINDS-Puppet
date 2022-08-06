@@ -33,6 +33,10 @@ class common {
     ensure     => latest,
   }
 
+  package { 'python3' :
+    ensure => latest,
+  }
+
   include epel
 
   include message_of_day
