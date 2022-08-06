@@ -14,7 +14,8 @@ This is all my puppet declarations for certain services across a couple of VM's
 ├── puppetlabs-inifile (v5.3.0)
 ├── puppetlabs-motd (v6.2.0)
 ├── puppetlabs-ntp (v9.0.1)
-├── puppetlabs-stdlib (v8.2.0)  invalid
+├── puppetlabs-stdlib (v8.2.0)
+├── puppetlabs-vcsrepo (v5.2.0)
 ├── saz-timezone (v6.1.0)
 ├── thias-sysctl (v1.0.7)
 └── treydock-yum_cron (v6.2.0)
@@ -38,7 +39,7 @@ $ dnf install puppet-agent
 
 ## Password lookups
 
-Passwords are done by external lookups on a yaml file. This allows flexibility to store config without storing the password in Git.
+Passwords are done by external lookups on a yaml file. This file is encrypted with git-crypt.
 
 `/etc/puppetlabs/code/environments/production/data/password.yml`
 
