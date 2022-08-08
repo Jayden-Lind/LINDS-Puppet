@@ -20,7 +20,7 @@ class backup {
     source   => 'https://github.com/Jayden-Lind/OPNSense-Backup.git',
   }
 
-  $hpe_repo_path = '/root/HPE-switch-backup'
+  $hpe_repo_path = '/root/HPE-switch-backup/'
 
   vcsrepo { $hpe_repo_path:
     ensure   => present,
@@ -52,7 +52,7 @@ class backup {
   }
 
   cron { 'scp_to_nas':
-    command => "/bin/bash -c 'cp ${$opnsense_repo_path} 1* /mnt/nas'",
+    command => "/bin/bash -c 'cp ${$opnsense_repo_path}1* /mnt/nas'",
     user    => 'root',
     minute  => '0',
     hour    => '2',
@@ -71,7 +71,7 @@ class backup {
   }
 
   cron { 'scp_to_nas_hpe':
-    command => "/bin/bash -c 'cp ${$hpe_repo_path} 1* /mnt/nas'",
+    command => "/bin/bash -c 'cp ${$hpe_repo_path}1* /mnt/nas'",
     user    => 'root',
     minute  => '0',
     hour    => '2',
