@@ -28,6 +28,14 @@ class backup {
     source   => 'https://github.com/Jayden-Lind/HPE-OfficeConnect-Backup.git',
   }
 
+  $truenas_repo_path = '/root/TrueNAS-backup-API/'
+
+  vcsrepo { $truenas_repo_path:
+    ensure   => present,
+    provider => git,
+    source   => 'https://github.com/Jayden-Lind/TrueNAS-backup-API.git',
+  }
+
   $linds_opnsense = '192.168.6.1'
   $jd_opnsense = '10.0.50.1'
 
@@ -72,6 +80,35 @@ class backup {
 
   cron { 'scp_to_nas_hpe':
     command => "/bin/bash -c 'cp ${$hpe_repo_path}1* /mnt/nas'",
+    user    => 'root',
+    minute  => '0',
+    hour    => '2',
+    weekday => '1',
+  }
+
+  $truenas_hostname_linds = 'linds-truenas-01.linds.com.au'
+  $truenas_hostname_jd = 'jd-truenas-01.linds.com.au'
+  $truenas_username = lookup('truenas_username')
+  $truenas_password = lookup('truenas_password')
+
+  cron { 'scp_linds_truenas':
+    command => "cd ${$truenas_repo_path} && python3 api.py ${truenas_hostname_linds} ${truenas_username} ${truenas_password}",
+    user    => 'root',
+    minute  => '0',
+    hour    => '1',
+    weekday => '1',
+  }
+
+  cron { 'scp_jd_truenas':
+    command => "cd ${$truenas_repo_path} && python3 api.py ${truenas_hostname_jd} ${truenas_username} ${truenas_password}",
+    user    => 'root',
+    minute  => '0',
+    hour    => '1',
+    weekday => '1',
+  }
+
+  cron { 'scp_to_nas_truenas':
+    command => "/bin/bash -c 'cp ${$truenas_repo_path}*.db /mnt/nas'",
     user    => 'root',
     minute  => '0',
     hour    => '2',
