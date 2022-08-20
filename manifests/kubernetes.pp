@@ -26,7 +26,7 @@ enabled=1',
   }
   package { 'kubelet':
     ensure          => latest,
-    install_options => '--disableexcludes=kubernetes',
+    install_options => ['--disableexcludes=kubernetes', '--nobest'],
   }
   package { 'kubeadm':
     ensure          => latest,
