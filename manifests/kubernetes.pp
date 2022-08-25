@@ -47,6 +47,32 @@ enabled=1',
     ensure => running,
     enable => true,
   }
+  file { '/mnt/data':
+    ensure => 'directory',
+    owner  => root,
+    group  => root,
+    mode   => '0644',
+  }
+  if $facts['networking']['hostname'] =~ /^LINDS-.*/ {
+    file { '/mnt/nas':
+      ensure => 'directory',
+      owner  => root,
+      group  => root,
+      mode   => '0644',
+    }
+    class { 'nfs':
+      nfs_server     => 'linds-truenas-01.linds.com.au',
+      nfs_extra_path => '/mnt/NAS/NAS',
+      mount_path     => '/mnt/nas',
+    }
+    cron { 'scp /mnt/data to NAS':
+      command => 'cp -r /mnt/data/ /mnt/nas/',
+      user    => 'root',
+      minute  => '0',
+      hour    => '2',
+      weekday => '1',
+    }
+  }
   exec { 'disable swap':
     path    => ['/usr/sbin/', '/usr/bin', '/bin', '/sbin'],
     command => 'swapoff -a',
@@ -79,12 +105,6 @@ enabled=1',
     path   => '/root/.bashrc',
     match  => '^export KUBECONFIG',
     line   => 'export KUBECONFIG=/etc/kubernetes/admin.conf',
-  }
-  file { '/mnt/data':
-    ensure => 'directory',
-    owner  => root,
-    group  => root,
-    mode   => '0644',
   }
   file { '/opt/bin':
     ensure => 'directory',

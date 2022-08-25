@@ -52,7 +52,7 @@ node 'jd-torrent-01.linds.com.au' {
   include common
 }
 
-node 'jd-kube-01.linds.com.au', 'jd-kube-02.linds.com.au', 'jd-kube-03.linds.com.au', 'linds-kube-01.linds.com.au' {
+node /^.*-kube-\d\d/ {
   include common
   include kubernetes
 }
