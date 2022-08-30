@@ -46,6 +46,12 @@ node 'linds-plex-01.linds.com.au' {
     nfs_extra_path => '/mnt/ZFS_NAS',
     mount_path     => '/mnt/nas',
   }
+  class { 'auto_fs_nas':
+    nas_server => 'linds-dc',
+    mount_path => '/mnt/cifs',
+    mount_dir  => 'nas',
+    extra_path => '/holiday videos',
+  }
 }
 
 node 'jd-torrent-01.linds.com.au' {
