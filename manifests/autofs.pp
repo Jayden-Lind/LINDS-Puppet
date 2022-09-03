@@ -1,4 +1,10 @@
-class auto_fs_nas (String $nas_server, String $mount_path, String $mount_dir, String $extra_path = '') {
+class auto_fs_nas (
+  String $nas_server,
+  String $mount_path,
+  String $mount_dir,
+  String $extra_path = ''
+) {
+
   include autofs
   $username = lookup('smb_username')
   $password = lookup('smb_password')

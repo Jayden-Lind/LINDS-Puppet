@@ -1,0 +1,7 @@
+---
+classes:
+  - chrony
+
+chrony::servers:
+  - 10.0.50.1
+  - 10.0.53.1

@@ -1,4 +1,8 @@
-class nfs (String $nfs_server, String $mount_path, String $nfs_extra_path = '') {
+class nfs (
+  String $nfs_server,
+  String $mount_path,
+  String $nfs_extra_path = ''
+) {
   mount { $mount_path:
     ensure  => mounted,
     device  => "${nfs_server}:${nfs_extra_path}",

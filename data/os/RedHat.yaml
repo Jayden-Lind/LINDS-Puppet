@@ -1,0 +1,27 @@
+---
+classes:
+  - logrotate
+  - yum_cron
+  - epel
+  - chrony
+  - selinux
+
+epel::epel_enabled: true
+epel::epel_testing_enabled: true
+epel::epel_source_enabled: true
+epel::epel_debuginfo_enabled: true
+epel::epel_testing_source_enabled: true
+epel::epel_testing_debuginfo_enabled: true
+
+selinux::mode: disabled
+selinux::type: targeted
+
+yum_cron::ensure: present
+yum_cron::apply_updates: true
+yum_cron::upgrade_type: default
+
+logrotate::ensure: latest
+logrotate::config:
+  rotate: 10
+  compress: true
+  rotate_every: week

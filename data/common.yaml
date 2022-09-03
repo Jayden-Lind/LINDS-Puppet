@@ -1,0 +1,13 @@
+---
+classes:
+  - common
+
+timezone::timezone: "Australia/Melbourne"
+
+chrony::servers:
+  - 0.au.pool.ntp.org
+  - 1.au.pool.ntp.org
+chrony::service_manage: true
+
+
+

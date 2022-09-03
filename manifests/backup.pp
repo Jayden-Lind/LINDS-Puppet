@@ -1,5 +1,8 @@
 class backup {
   $username = lookup('web_username')
+
+  $root_dir = '/root/'
+
   cron { 'scp':
     command => "/usr/bin/scp -i ~/.ssh/id_rsa_backup ${username}@10.0.60.2:/home/${username}/backup/* /mnt/nas/wordpress",
     user    => 'root',
@@ -12,7 +15,7 @@ class backup {
     ensure => latest,
   }
 
-  $opnsense_repo_path = '/root/OPNSense-backup/'
+  $opnsense_repo_path = "${root_dir}OPNSense-backup/"
 
   vcsrepo { $opnsense_repo_path:
     ensure   => present,
@@ -20,7 +23,7 @@ class backup {
     source   => 'https://github.com/Jayden-Lind/OPNSense-Backup.git',
   }
 
-  $hpe_repo_path = '/root/HPE-switch-backup/'
+  $hpe_repo_path = "${root_dir}HPE-switch-backup/"
 
   vcsrepo { $hpe_repo_path:
     ensure   => present,
@@ -28,7 +31,7 @@ class backup {
     source   => 'https://github.com/Jayden-Lind/HPE-OfficeConnect-Backup.git',
   }
 
-  $truenas_repo_path = '/root/TrueNAS-backup-API/'
+  $truenas_repo_path = "${root_dir}TrueNAS-backup-API/"
 
   vcsrepo { $truenas_repo_path:
     ensure   => present,

@@ -1,0 +1,8 @@
+---
+classes:
+  - auto_fs_nas
+
+auto_fs_nas::nas_server: jd-dc-01
+auto_fs_nas::mount_path: '/mnt'
+auto_fs_nas::mount_dir: 'nas'
+auto_fs_nas::extra_path: '/server/backup'
