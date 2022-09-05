@@ -1,4 +1,4 @@
-![image](/img/Puppet_Logo.svg)
+![image](img/Puppet_Logo.png)
 
 # LINDS-Puppet
 
