@@ -13,7 +13,7 @@ Uses open source [Puppet](https://puppet.com/try-puppet/open-source-puppet/) to 
 1. host_code
 > Determined by splitting by `-`. Is the first value in the list
 2. application
-> Determined by application by `-`. Is the second value in the list
+> Determined by splitting by `-`. Is the second value in the list
 
 eg: **jd-kube-01**
 
