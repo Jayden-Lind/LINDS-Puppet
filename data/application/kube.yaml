@@ -1,3 +1,6 @@
 ---
 classes:
   - kubernetes
+
+yum_cron::ensure: absent
+yum_cron::enable: false
