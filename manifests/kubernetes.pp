@@ -1,4 +1,4 @@
-class kubernetes {
+class kubernetes () {
   $repo = "[kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -37,7 +37,7 @@ enabled=1',
     install_options => '--disableexcludes=kubernetes',
   }
   package { 'containers-common':
-    ensure          => '2:1-401.el9',
+    ensure          => '2:1-40.el9',
   }
   package { 'cri-o':
     ensure => latest,
@@ -120,5 +120,15 @@ enabled=1',
     path   => '/opt/bin/flanneld',
     mode   => 'a+x',
     source => 'https://github.com/flannel-io/flannel/releases/latest/download/flanneld-amd64',
+  }
+  $token = lookup('kubeadm_token')
+  exec { 'kubeadm join':
+    command     => "kubeadm join 10.0.53.5:6443 --token ${token} --discovery-token-ca-cert-hash sha256:b267c1799b82b059d0ff86a473f182ee532c2ad5e2a47608451300f78e541168",
+    path        => ['/usr/bin', '/usr/sbin', '/bin', '/sbin', '/usr/local/bin'],
+    environment => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf'],
+    logoutput   => true,
+    timeout     => 0,
+    user        => 'root',
+    unless      => 'test -f /etc/kubernetes/kubelet.conf',
   }
 }

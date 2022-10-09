@@ -2,5 +2,6 @@
 classes:
   - kubernetes
 
-yum_cron::ensure: absent
-yum_cron::enable: false
+yum_cron::ensure: present
+yum_cron::enable: true
+yum_cron::exclude_packages: ["containers-common"]

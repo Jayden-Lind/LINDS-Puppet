@@ -1,0 +1,8 @@
+---
+classes:
+  - terraform
+  - nfs
+
+nfs::nfs_server: 'jd-truenas-01.linds.com.au'
+nfs::nfs_extra_path: '/mnt/NAS/NAS'
+nfs::mount_path: '/mnt/NAS'

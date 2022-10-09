@@ -1,5 +1,17 @@
 class common {
   $public_key = lookup('ssh_public_key')
+  $password = lookup('root_password')
+
+  user { 'root' :
+    ensure   => 'present',
+    name     => 'root',
+    password => $password,
+  }
+
+  user { 'vagrant' :
+    ensure => 'absent',
+    name   => 'vagrant',
+  }
 
   package { 'cifs-utils' :
     ensure     => latest,
