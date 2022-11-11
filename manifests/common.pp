@@ -21,7 +21,15 @@ class common {
     ensure     => latest,
   }
 
+  package { 'git' :
+    ensure     => latest,
+  }
+
   package { 'python3' :
+    ensure => latest,
+  }
+
+  package { 'bash-completion':
     ensure => latest,
   }
 
@@ -52,6 +60,6 @@ class common {
     path    => '/etc/puppetlabs/puppet/puppet.conf',
     section => 'main',
     setting => 'runinterval',
-    value   => '6h',
+    value   => '1h',
   }
 }

@@ -5,6 +5,7 @@ classes:
   - epel
   - chrony
   - selinux
+  - rhel
 
 epel::epel_enabled: true
 epel::epel_testing_enabled: true

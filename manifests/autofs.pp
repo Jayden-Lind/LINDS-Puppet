@@ -27,7 +27,7 @@ class auto_fs_nas (
     mappings => [
       {
         'key'     => $mount_dir,
-        'options' => "-fstype=cifs,username=${username},password=${password},domain=linds.com.au,vers=${ver},dir_mode=0777,file_mode=0777,_netdev,cache=none,rsize=8388608,wsize=8388608",
+        'options' => "-fstype=cifs,username=${username},password=${password},domain=linds.com.au,vers=${ver},dir_mode=0777,file_mode=0777,_netdev,cache=none,rsize=8388608,wsize=8388608,noblocksend,seal,resilienthandles",
         'fs'      => "://${nas_server}/nas${extra_path}",
       },
     ],

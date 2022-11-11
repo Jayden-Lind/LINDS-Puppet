@@ -1,4 +1,22 @@
-class kubernetes () {
+class kubernetes (
+  Boolean $master_node = false,
+) {
+  $token = lookup('kubeadm_token')
+  if $master_node == true {
+    exec { 'kubeadm init':
+      command   => "kubeadm init --pod-network-cidr 10.244.0.0/16 --token ${token} --token-ttl 0",
+      path      => ['/usr/bin', '/usr/sbin', '/bin', '/sbin', '/usr/local/bin'],
+      unless    => "kubectl get nodes | grep -i ${$facts['networking']['hostname']}",
+      user      => 'root',
+      logoutput => true,
+    }
+    vcsrepo { "/root/LINDS-Kubernetes":
+      ensure   => present,
+      provider => git,
+      source   => 'https://github.com/Jayden-Lind/LINDS-Kubernetes',
+    }
+  }
+
   $repo = "[kubernetes]
 name=Kubernetes
 baseurl=https://packages.cloud.google.com/yum/repos/kubernetes-el7-x86_64
@@ -24,6 +42,7 @@ gpgcheck=1
 gpgkey=https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/1.24/CentOS_8/repodata/repomd.xml.key
 enabled=1',
   }
+
   package { 'kubelet':
     ensure          => latest,
     install_options => ['--disableexcludes=kubernetes', '--nobest'],
@@ -64,16 +83,18 @@ enabled=1',
       mode   => '0644',
     }
     class { 'nfs':
-      nfs_server     => 'linds-truenas-01.linds.com.au',
+      nfs_server     => 'jd-truenas-01.linds.com.au',
       nfs_extra_path => '/mnt/NAS/NAS',
       mount_path     => '/mnt/nas',
     }
-    cron { 'scp /mnt/data to NAS':
-      command => 'cp -r /mnt/data/ /mnt/nas/',
-      user    => 'root',
-      minute  => '0',
-      hour    => '2',
-      weekday => '1',
+    if $facts['networking']['hostname'] =~ /^LINDS-Kube-02.*/ {
+      cron { 'scp /mnt/data to NAS':
+        command => 'cp -r /mnt/data/ /mnt/nas/',
+        user    => 'root',
+        minute  => '0',
+        hour    => '2',
+        weekday => '1',
+      }
     }
   }
   exec { 'disable swap':
@@ -109,21 +130,9 @@ enabled=1',
     match  => '^export KUBECONFIG',
     line   => 'export KUBECONFIG=/etc/kubernetes/admin.conf',
   }
-  file { '/opt/bin':
-    ensure => 'directory',
-    owner  => root,
-    group  => root,
-    mode   => '0644',
-  }
-  file { 'flanneld':
-    ensure => 'file',
-    path   => '/opt/bin/flanneld',
-    mode   => 'a+x',
-    source => 'https://github.com/flannel-io/flannel/releases/latest/download/flanneld-amd64',
-  }
-  $token = lookup('kubeadm_token')
+
   exec { 'kubeadm join':
-    command     => "kubeadm join 10.0.53.5:6443 --token ${token} --discovery-token-ca-cert-hash sha256:b267c1799b82b059d0ff86a473f182ee532c2ad5e2a47608451300f78e541168",
+    command     => "kubeadm join 10.0.53.10:6443 --token ${token} --discovery-token-ca-cert-hash sha256:e43e13da9608cd5bf50464978a0c1257858aaadc87f9c0ff4cc5a516100718d7",
     path        => ['/usr/bin', '/usr/sbin', '/bin', '/sbin', '/usr/local/bin'],
     environment => ['HOME=/root', 'KUBECONFIG=/etc/kubernetes/kubelet.conf'],
     logoutput   => true,
