@@ -2,7 +2,7 @@
 classes:
  - ceph_linds
 
-ceph_linds::client: true
+ceph_linds::client: false
 ceph_linds::server: true
 epel::epel_managed: false
 epel::epel_enabled: false

@@ -16,10 +16,13 @@ class ceph_linds (
     release     => 'quincy',
   }
   class { 'ceph':
-    fsid                => $fsid,
-    mon_host            => '10.0.53.9,10.3.1.127,10.0.53.2',
+    fsid                      => $fsid,
+    #mon_host                  => '10.0.53.5',
+    mon_host                  => $facts['networking']['ip'],
     # create initial mon host first to get them to join the cluster then add the rest of the mon hosts
-    authentication_type => 'cephx',
+    authentication_type       => 'cephx',
+    osd_pool_default_size     => '2',
+    osd_pool_default_min_size => '2',
   }
 
   if $server == true {
