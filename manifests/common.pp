@@ -62,4 +62,8 @@ class common {
     setting => 'runinterval',
     value   => '1h',
   }
+
+  package { 'net-tools':
+    ensure => present,
+  }
 }
