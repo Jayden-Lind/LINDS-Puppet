@@ -56,7 +56,7 @@ enabled=1',
     install_options => '--disableexcludes=kubernetes',
   }
   package { 'containers-common':
-    ensure          => '2:1-46.el9',
+    ensure          => '2:1-40.el9',
   }
   package { 'cri-o':
     ensure => latest,
