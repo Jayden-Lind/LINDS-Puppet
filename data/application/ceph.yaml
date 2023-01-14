@@ -1,3 +1,13 @@
 ---
 classes:
  - ceph_linds
+
+ceph_linds::client: true
+ceph_linds::server: true
+epel::epel_managed: false
+epel::epel_enabled: false
+epel::epel_testing_managed: false
+epel::epel_source_managed: false
+epel::epel_debuginfo_managed: false
+epel::epel_testing_source_managed: false
+epel::epel_testing_debuginfo_managed: false
