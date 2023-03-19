@@ -55,9 +55,6 @@ enabled=1',
     ensure          => latest,
     install_options => '--disableexcludes=kubernetes',
   }
-  package { 'containers-common':
-    ensure          => '2:1-40.el9',
-  }
   package { 'cri-o':
     ensure => latest,
   }
@@ -68,6 +65,13 @@ enabled=1',
   service { 'kubelet':
     ensure => running,
     enable => true,
+  }
+  file { '/etc/containers/policy.json':
+    path    => '/etc/containers/policy.json',
+    owner   => root,
+    group   => root,
+    mode    => '0644',
+    content => file('/etc/puppetlabs/code/environments/production/resources/policy.json'),
   }
   file { '/mnt/data':
     ensure => 'directory',

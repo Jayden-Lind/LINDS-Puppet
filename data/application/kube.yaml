@@ -4,4 +4,3 @@ classes:
 
 yum_cron::ensure: present
 yum_cron::enable: true
-yum_cron::exclude_packages: ["containers-common"]
